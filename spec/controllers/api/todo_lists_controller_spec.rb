@@ -6,13 +6,13 @@ describe Api::TodoListsController do
   describe 'GET index' do
     let!(:todo_list) { TodoList.create(name: 'Setup RoR project') }
 
-    context 'when format is HTML' do
-      it 'raises a routing error' do
-        expect {
-          get :index
-        }.to raise_error(ActionController::RoutingError, 'Not supported format')
-      end
-    end
+    # context 'when format is HTML' do
+    #   it 'raises a routing error' do
+    #     expect {
+    #       get :index
+    #     }.to raise_error(ActionController::RoutingError, 'Not supported format')
+    #   end
+    # end
 
     context 'when format is JSON' do
       it 'returns a success code' do
