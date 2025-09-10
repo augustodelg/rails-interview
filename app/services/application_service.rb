@@ -1,5 +1,4 @@
 class ApplicationService
-  
   attr_reader :result, :errors
 
   def initialize
@@ -7,8 +6,8 @@ class ApplicationService
     @errors = []
   end
 
-  def self.call(*args, &block)
-    new(*args, &block).call
+  def self.call(*args, **kwargs, &block)
+    new(*args, **kwargs, &block).call
   end
 
   def call

@@ -1,33 +1,39 @@
 module TodoListItems
   class CreateService < ApplicationService
-    attr_reader :todo_list_item_params, 
-                :todo_list_id
-
-    def initialize(todo_list_id, todo_list_item_params)
+    def initialize(todo_list_id:, params:)
+      super()
       @todo_list_id = todo_list_id
-      @todo_list_item_params = todo_list_item_params
+      @params = params
+      @todo_list = nil
+      @todo_list_item = nil
     end
 
     def call
       begin
-        debugger
-        find_todo_list
+        get_todo_list
+
+        create_todo_list_item
         
-        @todo_list_item = TodoListItem.create(todo_list_item_params.merge(todo_list: todo_list))
-        set_result(@todo_list_item)
-
+        if @todo_list_item.save
+          set_result(@todo_list_item)
+        else
+          @todo_list_item.errors.full_messages.each { |error| add_error(error) }
+        end
       rescue StandardError => e
-        add_error(e.message)
-
+        add_error("Error creating the item: #{e.message}")
       ensure
-        self
+        return self
       end
     end
 
     private
 
-    def find_todo_list
-      @todo_list = TodoList.find(id: todo_list_id)
+    def get_todo_list
+      @todo_list = TodoList.find_by(id: @todo_list_id)
+    end
+
+    def create_todo_list_item
+      @todo_list_item = TodoListItem.new(@params.merge(todo_list: @todo_list))
     end
   end
 end

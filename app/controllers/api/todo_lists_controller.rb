@@ -2,9 +2,14 @@ module Api
   class TodoListsController < ApiController
     # GET /api/todolists
     def index
-      @todo_lists = TodoList.all
-
-      respond_to :json
+      service = TodoLists::GetAllServices.call
+      
+      if service.success?
+        @todo_lists = service.result
+        respond_to :json
+      else
+        render json: { errors: service.errors }, status: :unprocessable_entity
+      end
     end
   end
 end
