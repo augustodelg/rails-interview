@@ -11,6 +11,9 @@ module TodoLists
         
         set_result(@todo_lists)
         
+      rescue ActiveRecord::RecordNotFound
+        add_error('List not found')
+        set_error_status(:not_found)
       rescue StandardError => e
         add_error("Error getting all todo lists: #{e.message}")
       ensure

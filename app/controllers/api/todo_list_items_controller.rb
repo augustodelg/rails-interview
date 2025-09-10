@@ -11,7 +11,7 @@ module Api
         @todo_list_item = service.result
         respond_to :json
       else
-        render json: { errors: service.errors }, status: :unprocessable_entity
+        render json: { errors: service.errors[:messages] }, status: service.errors[:status]
       end
     end
 
@@ -27,7 +27,7 @@ module Api
         @todo_list_item = service.result
         respond_to :json
       else
-        render json: { errors: service.errors }, status: :unprocessable_entity
+        render json: { errors: service.errors[:messages] }, status: service.errors[:status]
       end
     end
 
@@ -42,7 +42,7 @@ module Api
         @todo_list_item = service.result
         respond_to :json
       else
-        render json: { errors: service.errors }, status: :unprocessable_entity
+        render json: { errors: service.errors[:messages] }, status: service.errors[:status]
       end
     end
 
@@ -57,7 +57,7 @@ module Api
         @todo_list_item = service.result
         respond_to :json
       else
-        render json: { errors: service.errors }, status: :unprocessable_entity
+        render json: { errors: service.errors[:messages] }, status: service.errors[:status]
       end
     end
 

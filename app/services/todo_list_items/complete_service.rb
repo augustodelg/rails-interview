@@ -16,7 +16,9 @@ module TodoListItems
         else
           @todo_list_item.errors.full_messages.each { |error| add_error(error) }
         end
-        
+      rescue ActiveRecord::RecordNotFound
+        add_error('Item not found')
+        set_error_status(:not_found)
       rescue StandardError => e
         add_error("Error completing the item: #{e.message}")
       ensure

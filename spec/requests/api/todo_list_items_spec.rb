@@ -22,6 +22,13 @@ RSpec.describe "TodoListItems", type: :request do
         expect(response_data['todo_list_id']).to eq(todo_list.id)
       end
     end
+
+    it 'should not create the todo list item if the list does not exist' do
+      post "/api/todolists/999999/items", params: { todo_list_item: { description: 'Test item', is_done: false } }, as: :json
+      expect(response).to have_http_status(:unprocessable_entity)
+      response_data = JSON.parse(response.body)
+      expect(response_data['errors']).to be_present
+    end
   end
 
   describe "PUT /api/todolists/:todo_list_id/items/:id" do
@@ -43,6 +50,13 @@ RSpec.describe "TodoListItems", type: :request do
         expect(response_data['updated_at']).to eq(todo_list_item.updated_at.as_json)
         expect(response_data['todo_list_id']).to eq(todo_list.id)
       end
+    end
+
+    it 'should not update the todo list item if it does not exist' do
+      put "/api/todolists/#{todo_list.id}/items/999999", params: { todo_list_item: { description: 'Updated item' } }, as: :json
+      expect(response).to have_http_status(:not_found)
+      response_data = JSON.parse(response.body)
+      expect(response_data['errors']).to be_present
     end
   end
 
@@ -66,6 +80,13 @@ RSpec.describe "TodoListItems", type: :request do
         expect(response_data['updated_at']).to eq(todo_list_item_to_delete.updated_at.as_json)
         expect(response_data['todo_list_id']).to eq(todo_list.id)
       end
+    end
+
+    it 'should not delete the todo list item if it does not exist' do
+      delete "/api/todolists/#{todo_list.id}/items/999999", as: :json
+      expect(response).to have_http_status(:not_found)
+      response_data = JSON.parse(response.body)
+      expect(response_data['errors']).to be_present
     end
   end
 end

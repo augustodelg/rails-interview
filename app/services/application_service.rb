@@ -3,7 +3,10 @@ class ApplicationService
 
   def initialize
     @result = nil
-    @errors = []
+    @errors = {
+      messages: [],
+      status: :unprocessable_entity
+    }
   end
 
   def self.call(*args, **kwargs, &block)
@@ -15,7 +18,7 @@ class ApplicationService
   end
 
   def success?
-    @errors.empty?
+    @errors[:messages].empty?
   end
 
   def failure?
@@ -26,9 +29,13 @@ class ApplicationService
 
   def add_error(message)
     Rails.logger.error("[Error] #{message}")
-    @errors << message
+    @errors[:messages] << message
   end
-  
+
+  def set_error_status(status)
+    @errors[:status] = status
+  end
+
   def set_result(result)
     @result = result
   end
