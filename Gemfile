@@ -40,6 +40,15 @@ gem "tzinfo-data", platforms: %i[ mingw mswin x64_mingw jruby ]
 # Reduces boot times through caching; required in config/boot.rb
 gem "bootsnap", require: false
 
+gem "redis", "~> 4.0"
+
+# Background job processing
+gem "sidekiq"
+
+# Tailwind CSS for styling
+gem "tailwindcss-rails"
+gem "tailwindcss-ruby", "3.4.13"
+
 # Use Sass to process CSS
 # gem "sassc-rails"
 
@@ -56,6 +65,7 @@ group :development do
   gem "web-console"
 
   gem "rspec-rails"
+  gem "foreman"
 
   # Add speed badges [https://github.com/MiniProfiler/rack-mini-profiler]
   # gem "rack-mini-profiler"
@@ -70,4 +80,5 @@ group :test do
   gem "capybara"
   gem "selenium-webdriver"
   gem "webdrivers"
+  gem "shoulda-matchers"
 end

@@ -1,0 +1,31 @@
+<%= turbo_frame_tag todo_list do %>
+  <div class="bg-white rounded-lg shadow-sm border hover:shadow-md transition-shadow">
+    <div class="p-6">
+      <div class="flex items-start justify-between">
+        <div class="flex-1">
+          <h3 class="text-lg font-semibold text-gray-900">
+            <%= link_to todo_list.name, todo_list, data: { turbo_frame: "_top" }, class: "hover:text-blue-600" %>
+          </h3>
+        </div>
+        
+        <div class="ml-4 flex-shrink-0 flex space-x-2">
+          <%= link_to "Delete", todo_list,
+                     method: :delete,
+                     data: { 
+                       confirm: "Are you sure? This will delete all items in this list.",
+                       turbo_method: :delete
+                     },
+                     class: "text-gray-400 hover:text-red-600 text-sm" %>
+        </div>
+      </div>
+
+      <%= render 'stats', todo_list: todo_list %>
+      
+      <div class="mt-4">
+        <%= link_to "View Details →", todo_list,
+                   data: { turbo_frame: "_top" },
+                   class: "text-blue-600 hover:text-blue-500 font-medium text-sm" %>
+      </div>
+    </div>
+  </div>
+<% end %>
