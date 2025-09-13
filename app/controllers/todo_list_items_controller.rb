@@ -26,21 +26,6 @@ class TodoListItemsController < ApplicationController
     end
   end
 
-  # PATCH/PUT /todolists/:todo_list_id/items/:id
-  def update
-    service = TodoListItems::UpdateService.call(
-      todo_list_id: @todo_list.id,
-      todo_list_item_id: @todo_list_item.id,
-      params: todo_list_item_params
-    )
-
-    if service.success?
-      redirect_to todo_lists_path, notice: 'Item updated!'
-    else
-      render :edit, status: :unprocessable_entity
-    end
-  end
-
   # PATCH /todolists/:todo_list_id/items/:id/toggle
   def toggle
     service = TodoListItems::UpdateService.call(
@@ -50,7 +35,10 @@ class TodoListItemsController < ApplicationController
     )
 
     if service.success?
-      redirect_to todo_lists_path
+      respond_to do |format|
+        format.turbo_stream { head :ok }
+        format.html { redirect_to todo_lists_path, notice: 'Item toggled!' }
+      end
     else
       redirect_to todo_lists_path, alert: 'Failed to toggle item'
     end
@@ -64,7 +52,10 @@ class TodoListItemsController < ApplicationController
     )
 
     if service.success?
-      redirect_to todo_lists_path, notice: 'Item deleted!'
+      respond_to do |format|
+        format.turbo_stream { head :ok }
+        format.html { redirect_to todo_lists_path, notice: 'Item deleted!' }
+      end
     else
       redirect_to todo_lists_path, alert: 'Failed to delete item'
     end

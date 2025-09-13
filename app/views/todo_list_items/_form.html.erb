@@ -1,11 +1,11 @@
 <%= form_with model: [todo_list, todo_list_item], 
       id: "new_item_form_#{todo_list.id}",
-      class: "flex space-x-3" do |form| %>
+      class: "flex grid-cols-2 gap-4" do |form| %>
   
   <div class="flex-1">
     <%= form.text_field :description, 
           placeholder: "Add new item...", 
-          class: "w-full bg-white rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" %>
+          class: "w-full h-10 p-2 bg-white rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" %>
     
     <% if todo_list_item.errors.any? %>
       <div class="mt-2 text-sm text-red-600">

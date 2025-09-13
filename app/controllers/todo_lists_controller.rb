@@ -46,26 +46,7 @@ class TodoListsController < ApplicationController
   # POST /todolists/:id/complete_all
   def complete_all
     service = TodoLists::CompleteAllService.call(todo_list_id: @todo_list.id)
-    
-    respond_to do |format|
-      if service.success?
-        format.turbo_stream { 
-          render turbo_stream: turbo_stream.append("notifications", 
-            partial: "shared/notification", 
-            locals: { message: "Complete all job queued!", type: "info" }
-          )
-        }
-        format.html { redirect_to todolists_path, notice: 'Complete all job queued!' }
-      else
-        format.turbo_stream { 
-          render turbo_stream: turbo_stream.append("notifications", 
-            partial: "shared/notification", 
-            locals: { message: service.errors[:messages].join(', '), type: "error" }
-          )
-        }
-        format.html { redirect_to todolists_path, alert: service.errors[:messages].join(', ') }
-      end
-    end
+    head :ok if service.success?
   end
 
   private

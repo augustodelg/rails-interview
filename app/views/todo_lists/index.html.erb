@@ -1,10 +1,7 @@
-<div class="w-full min-h-screen bg-gray-50">
+<div class="max-w-screen-lg mx-auto min-h-screen bg-gray-100">
   <div class="sm:px-10 lg:px-8 py-8">
     <div class="mb-8">
-      <h1 class="text-4xl font-bold text-gray-950 mb-4">Todo Lists</h1>
-      
-      <div id="notifications" class="space-y-2 mb-6"></div>
-      
+      <h1 class="text-4xl font-bold text-gray-950 mb-4">Todo Lists</h1>      
       <div class="bg-white rounded-lg shadow p-6 mb-6">
         <h2 class="text-lg font-semibold text-gray-900 mb-4">Create New Todo List</h2>
         <%= render 'todo_lists/form', todo_list: @todo_list %>

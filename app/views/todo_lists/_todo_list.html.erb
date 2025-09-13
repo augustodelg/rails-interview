@@ -2,30 +2,8 @@
 <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden" id="<%= dom_id(todo_list) %>">
   <!-- Header -->
   <div class="px-6 py-4 bg-gray-50 border-b border-gray-200">
-    <div class="flex items-center justify-between">
-      <div>
-        <h3 class="text-lg font-medium text-gray-900">#<%= todo_list.id %> | <%= todo_list.name %></h3>
-        <div class="mt-1 flex items-center space-x-4 text-sm text-gray-500">
-          <span><%= pluralize(todo_list.todo_list_items.count, 'item') %></span>
-          <span class="text-green-600">
-            (<%= todo_list.todo_list_items.where(is_done: true).count %> completed)
-          </span>
-        </div>
-      </div>
-      
-      <!-- Complete All Button -->
-      <% if todo_list.todo_list_items.where(is_done: false).any? %>
-        <%= button_to complete_all_todo_list_path(todo_list), 
-              method: :post,
-              remote: true,
-              form: { data: { turbo_frame: "_top" } },
-              class: "inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500" do %>
-          <svg class="mr-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-          </svg>
-          Complete All
-        <% end %>
-      <% end %>
+    <div id="todo_list_<%= todo_list.id %>_header">
+      <%= render 'todo_lists/header_section', todo_list: todo_list %>
     </div>
   </div>
 

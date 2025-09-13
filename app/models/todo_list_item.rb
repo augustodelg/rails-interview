@@ -15,4 +15,5 @@ class TodoListItem < ApplicationRecord
   }
 
   scope :incomplete, -> { where(is_done: false) }
+
 end

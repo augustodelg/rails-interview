@@ -47,6 +47,7 @@ gem "sidekiq"
 
 # Tailwind CSS for styling
 gem "tailwindcss-rails"
+gem "tailwindcss-ruby", "3.4.13"
 
 # Use Sass to process CSS
 # gem "sassc-rails"
@@ -64,6 +65,7 @@ group :development do
   gem "web-console"
 
   gem "rspec-rails"
+  gem "foreman"
 
   # Add speed badges [https://github.com/MiniProfiler/rack-mini-profiler]
   # gem "rack-mini-profiler"

@@ -44,7 +44,7 @@ module TodoLists
     end
 
     def enqueue_complete_all_job
-      @job = CompleteAllItemsJob.perform_later(@todo_list_id)
+      @job = CompleteAllItemsJob.perform_later(todo_list: @todo_list)
       Rails.logger.info "Enqueued CompleteAllItemsJob with job_id: #{@job.job_id} for TodoList ##{@todo_list_id}"
     end
   end
