@@ -1,0 +1,23 @@
+<%= form_with model: [todo_list, todo_list_item], 
+      id: "new_item_form_#{todo_list.id}",
+      class: "flex space-x-3" do |form| %>
+  
+  <div class="flex-1">
+    <%= form.text_field :description, 
+          placeholder: "Add new item...", 
+          class: "w-full bg-white rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" %>
+    
+    <% if todo_list_item.errors.any? %>
+      <div class="mt-2 text-sm text-red-600">
+        <% todo_list_item.errors.full_messages.each do |message| %>
+          <p><%= message %></p>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+
+  <div>
+    <%= form.submit "Add", 
+          class: "inline-flex justify-center rounded-md border border-transparent bg-blue-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2" %>
+  </div>
+<% end %>

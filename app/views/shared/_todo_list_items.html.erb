@@ -1,0 +1,15 @@
+<div id="todo_list_<%= todo_list.id %>_items" class="todo-items">
+  <% todo_list.todo_list_items.each do |item| %>
+    <div class="todo-item <%= 'completed' if item.is_done %>" data-item-id="<%= item.id %>">
+      <input type="checkbox" <%= 'checked' if item.is_done %> disabled>
+      <span class="item-description <%= 'line-through' if item.is_done %>">
+        <%= item.description %>
+      </span>
+      <% if item.is_done %>
+        <span class="status-badge completed">✓ Completed</span>
+      <% else %>
+        <span class="status-badge pending">Pending</span>
+      <% end %>
+    </div>
+  <% end %>
+</div>

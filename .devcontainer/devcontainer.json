@@ -1,10 +1,9 @@
 {
   "name": "crunchloop-rails-interview",
 
-  // Dockerfile for the devcontainer
-  "build": {
-    "dockerfile": "Dockerfile"
-  },
+  // Use docker-compose to include Redis service
+  "dockerComposeFile": "docker-compose.yml",
+  "service": "rails-app",
 
   // Set the workspace folder
   "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
@@ -13,7 +12,7 @@
   "features": {},
 
   // Use 'forwardPorts' to make a list of ports inside the container available locally.
-  "forwardPorts": [3000],
+  "forwardPorts": [3000, 6379],
 
   // Use 'postCreateCommand' to run commands after the container is created.
   "postCreateCommand": "bundle install && bundle exec rake db:setup",

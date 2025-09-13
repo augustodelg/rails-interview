@@ -1,9 +1,20 @@
-<%= link_to 'Add Todo List', new_todo_list_path %>
-
-<div>
-  <% @todo_lists.each do |todo_list| %>
-    <div>
-      #<%= todo_list.id %> | <%= todo_list.name %>
+<div class="w-full min-h-screen bg-gray-50">
+  <div class="sm:px-10 lg:px-8 py-8">
+    <div class="mb-8">
+      <h1 class="text-4xl font-bold text-gray-950 mb-4">Todo Lists</h1>
+      
+      <div id="notifications" class="space-y-2 mb-6"></div>
+      
+      <div class="bg-white rounded-lg shadow p-6 mb-6">
+        <h2 class="text-lg font-semibold text-gray-900 mb-4">Create New Todo List</h2>
+        <%= render 'todo_lists/form', todo_list: @todo_list %>
+      </div>
     </div>
-  <% end %>
+
+    <div id="todo_lists" class="grid grid-cols-1 gap-6">
+      <% @todo_lists.each do |todo_list| %>
+        <%= render 'todo_lists/todo_list', todo_list: todo_list %>
+      <% end %>
+    </div>
+  </div>
 </div>

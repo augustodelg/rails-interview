@@ -11,5 +11,20 @@ module Api
         render json: { errors: service.errors[:messages] }, status: service.errors[:status]
       end
     end
+
+    # POST /api/todolists/:id/complete_all
+    def complete_all
+      service = TodoLists::CompleteAllService.call(todo_list_id: params[:id])
+      
+      if service.success?
+        render json: { 
+          message: "Complete all job queued successfully", 
+          job_id: service.result[:job_id],
+          todo_list_id: params[:id]
+        }, status: :accepted
+      else
+        render json: { errors: service.errors[:messages] }, status: service.errors[:status]
+      end
+    end
   end
 end
