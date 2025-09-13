@@ -1,0 +1,10 @@
+<div id="todo_list_<%= todo_list.id %>_stats" class="mt-4">
+  <% if todo_list.todo_list_items.any? %>
+    <div class="flex items-center space-x-4 text-sm text-gray-500">
+      <span><%= pluralize(todo_list.todo_list_items.count, 'item') %></span>
+      <span><%= pluralize(todo_list.todo_list_items.incomplete.count, 'left') %></span>
+    </div>
+  <% else %>
+    <p class="text-sm text-gray-500">No items yet</p>
+  <% end %>
+</div>

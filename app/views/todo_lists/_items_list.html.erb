@@ -1,7 +1,0 @@
-<% if todo_list.todo_list_items.any? %>
-  <% todo_list.todo_list_items.order(:created_at).each do |item| %>
-    <%= render 'todo_list_items/todo_list_item', todo_list_item: item %>
-  <% end %>
-<% else %>
-  <p class="text-gray-500 text-center py-8">No items yet. Add one above!</p>
-<% end %>

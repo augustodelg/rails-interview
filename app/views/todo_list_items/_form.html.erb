@@ -1,23 +1,31 @@
 <%= form_with model: [todo_list, todo_list_item], 
-      id: "new_item_form_#{todo_list.id}",
-      class: "flex grid-cols-2 gap-4" do |form| %>
-  
-  <div class="flex-1">
-    <%= form.text_field :description, 
-          placeholder: "Add new item...", 
-          class: "w-full h-10 p-2 bg-white rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" %>
-    
+              data: { turbo_frame: "new_todo_item_form" },
+              local: false,
+              class: "bg-white shadow-sm rounded-lg p-6" do |form| %>
+  <div class="space-y-4">
     <% if todo_list_item.errors.any? %>
-      <div class="mt-2 text-sm text-red-600">
-        <% todo_list_item.errors.full_messages.each do |message| %>
-          <p><%= message %></p>
-        <% end %>
+      <div class="bg-red-50 border border-red-200 rounded-lg p-4">
+        <div class="text-red-800 font-medium">Please fix the following errors:</div>
+        <ul class="mt-2 text-red-700 list-disc list-inside">
+          <% todo_list_item.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
       </div>
     <% end %>
-  </div>
 
-  <div>
-    <%= form.submit "Add", 
-          class: "inline-flex justify-center rounded-md border border-transparent bg-blue-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2" %>
+    <div>
+      <%= form.label :description, "New Item", class: "block text-sm font-bold text-gray-700" %>
+      <div class="mt-1 flex space-x-3">
+        <%= form.text_field :description, 
+                           placeholder: "What needs to be done?",
+                           class: "flex-1 block w-full p-2 rounded-md border-2 border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm #{'border-red-300' if todo_list_item.errors[:description].present?}" %>
+        <%= form.submit "Add Item",
+                       class: "bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2" %>
+      </div>
+      <% if todo_list_item.errors[:description].present? %>
+        <p class="mt-2 text-sm text-red-600"><%= todo_list_item.errors[:description].first %></p>
+      <% end %>
+    </div>
   </div>
 <% end %>

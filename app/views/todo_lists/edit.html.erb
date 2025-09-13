@@ -1,0 +1,47 @@
+<div class="px-4 sm:px-0">
+  <div class="sm:flex sm:items-center sm:justify-between">
+    <div class="sm:flex-auto">
+      <div class="flex items-center pb-4">
+        <%= link_to "← Back", @todo_list, 
+                   class: "text-blue-600 hover:text-blue-500 text-sm font-medium" %>
+      </div>
+      <h2 class="mt-2 text-3xl font-bold leading-7 text-gray-900">Edit Todo List</h2>
+    </div>
+  </div>
+
+  <div class="mt-8">
+    <%= form_with model: @todo_list, local: false, class: "bg-white shadow-sm rounded-lg p-6" do |form| %>
+      <div class="space-y-4">
+        <% if @todo_list.errors.any? %>
+          <div class="bg-red-50 border border-red-200 rounded-lg p-4">
+            <div class="text-red-800 font-medium">Please fix the following errors:</div>
+            <ul class="mt-2 text-red-700 list-disc list-inside">
+              <% @todo_list.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+              <% end %>
+            </ul>
+          </div>
+        <% end %>
+
+        <div>
+          <%= form.label :name, "List Name", class: "block text-sm font-bold text-gray-700" %>
+          <div class="mt-1">
+            <%= form.text_field :name, 
+                               placeholder: "Enter list name",
+                               class: "block w-full p-2 rounded-md border-2 border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm #{'border-red-300' if @todo_list.errors[:name].present?}" %>
+          </div>
+          <% if @todo_list.errors[:name].present? %>
+            <p class="mt-2 text-sm text-red-600"><%= @todo_list.errors[:name].first %></p>
+          <% end %>
+        </div>
+
+        <div class="flex space-x-3">
+          <%= form.submit "Update List",
+                         class: "bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2" %>
+          <%= link_to "Cancel", @todo_list,
+                     class: "bg-white hover:bg-gray-50 border border-gray-300 text-gray-700 font-medium py-2 px-4 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2" %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

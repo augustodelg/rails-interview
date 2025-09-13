@@ -1,6 +1,6 @@
 class TodoListItemsController < ApplicationController
   before_action :set_todo_list
-  before_action :set_todo_list_item, only: [:show, :edit, :update, :destroy, :complete, :toggle]
+  before_action :set_todo_list_item, only: [:toggle, :destroy]
 
   # GET /todolists/:todo_list_id/items/new
   def new
@@ -10,17 +10,17 @@ class TodoListItemsController < ApplicationController
   # POST /todolists/:todo_list_id/items
   def create
     service = TodoListItems::CreateService.call(
-      todo_list_id: @todo_list.id,
+      todo_list_id: params[:todo_list_id],
       params: todo_list_item_params
     )
 
     if service.success?
+      @todo_list_item = service.result
       respond_to do |format|
-        format.turbo_stream { head :ok }
+        format.turbo_stream
         format.html { redirect_to todo_lists_path, notice: 'Item created!' }
       end
     else
-      @todo_list_item = TodoListItem.new(todo_list_item_params.merge(todo_list: @todo_list))
       service.errors[:messages].each { |msg| @todo_list_item.errors.add(:base, msg) }
       render :new, status: :unprocessable_entity
     end
@@ -28,32 +28,35 @@ class TodoListItemsController < ApplicationController
 
   # PATCH /todolists/:todo_list_id/items/:id/toggle
   def toggle
-    service = TodoListItems::UpdateService.call(
-      todo_list_id: @todo_list.id,
-      todo_list_item_id: @todo_list_item.id,
-      params: { is_done: !@todo_list_item.is_done }
+    service = TodoListItems::ToggleService.call(
+      todo_list_id: params[:todo_list_id],
+      todo_list_item_id: params[:id]
     )
 
     if service.success?
+      @todo_list_item = service.result
       respond_to do |format|
-        format.turbo_stream { head :ok }
+        format.turbo_stream
         format.html { redirect_to todo_lists_path, notice: 'Item toggled!' }
       end
     else
-      redirect_to todo_lists_path, alert: 'Failed to toggle item'
+      respond_to do |format|
+        format.turbo_stream { head :unprocessable_entity }
+        format.html { redirect_to todo_lists_path, alert: 'Failed to toggle item' }
+      end
     end
   end
 
   # DELETE /todolists/:todo_list_id/items/:id
   def destroy
     service = TodoListItems::DestroyService.call(
-      todo_list_id: @todo_list.id,
-      todo_list_item_id: @todo_list_item.id
+      todo_list_id: params[:todo_list_id],
+      todo_list_item_id: params[:id]
     )
 
     if service.success?
       respond_to do |format|
-        format.turbo_stream { head :ok }
+        format.turbo_stream
         format.html { redirect_to todo_lists_path, notice: 'Item deleted!' }
       end
     else
@@ -62,7 +65,7 @@ class TodoListItemsController < ApplicationController
   end
 
   private
-
+  
   def set_todo_list
     @todo_list = TodoList.find(params[:todo_list_id])
   end
@@ -70,7 +73,7 @@ class TodoListItemsController < ApplicationController
   def set_todo_list_item
     @todo_list_item = @todo_list.todo_list_items.find(params[:id])
   end
-
+  
   def todo_list_item_params
     params.require(:todo_list_item).permit(:description, :is_done)
   end

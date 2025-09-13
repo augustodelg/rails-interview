@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   # Main HTML routes with Hotwire
   resources :todo_lists, path: :todolists do
     member do
-      post 'complete_all'
+      patch 'complete_all_items'
     end
     
     resources :todo_list_items, path: :items do
@@ -19,7 +19,7 @@ Rails.application.routes.draw do
   namespace :api do
     resources :todo_lists, only: %i[index], path: :todolists do
       member do
-        post 'complete_all'
+        patch 'complete_all_items'
       end
 
       resources :todo_list_items, only: %i[create update destroy], path: :items do

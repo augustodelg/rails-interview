@@ -12,8 +12,9 @@
   </head>
 
   <body>
-    <main class="container mx-auto relative">
+    <main class="container max-w-7xl min-h-screen bg-gray-100 p-4 mx-auto relative md:p-10 ">
       <div id="notifications"/>
+      <%= render 'shared/flash_messages' if notice || alert %>
       <%= yield %>
     </main>
   </body>

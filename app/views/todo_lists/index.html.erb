@@ -1,17 +1,28 @@
-<div class="max-w-screen-lg mx-auto min-h-screen bg-gray-100">
-  <div class="sm:px-10 lg:px-8 py-8">
-    <div class="mb-8">
-      <h1 class="text-4xl font-bold text-gray-950 mb-4">Todo Lists</h1>      
-      <div class="bg-white rounded-lg shadow p-6 mb-6">
-        <h2 class="text-lg font-semibold text-gray-900 mb-4">Create New Todo List</h2>
-        <%= render 'todo_lists/form', todo_list: @todo_list %>
-      </div>
+<div class="px-4 sm:px-0">
+  <div class="sm:flex sm:items-center">
+    <div class="sm:flex-auto">
+      <h2 class="text-2xl font-bold leading-7 text-gray-900 sm:truncate">Your Todo Lists</h2>
+      <p class="mt-2 text-sm text-gray-700">Create and manage your todo lists with real-time updates.</p>
     </div>
+  </div>
 
-    <div id="todo_lists" class="grid grid-cols-1 gap-6">
-      <% @todo_lists.each do |todo_list| %>
-        <%= render 'todo_lists/todo_list', todo_list: todo_list %>
-      <% end %>
+  <div class="mt-8">
+    <%= turbo_frame_tag "new_todo_list_form" do %>
+      <%= render 'form', todo_list: @todo_list %>
+    <% end %>
+  </div>
+
+  <div class="mt-8">
+    <div id="todo_lists" class="grid gap-6 sm:grid-cols-1 lg:grid-cols-2">
+      <%= render @todo_lists %>
     </div>
+    
+    <% if @todo_lists.empty? %>
+      <div class="text-center py-12">
+        <div class="text-gray-400 text-6xl mb-4">📝</div>
+        <h3 class="text-lg font-medium text-gray-900 mb-2">No todo lists yet</h3>
+        <p class="text-gray-500">Create your first todo list above to get started.</p>
+      </div>
+    <% end %>
   </div>
 </div>

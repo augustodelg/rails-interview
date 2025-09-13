@@ -64,7 +64,7 @@ module Api
     private
 
     def todo_list_item_params
-      params.require(:todo_list_item).permit(:description, :is_done)
+      params.require(:todo_list_item).permit(:description, :completed)
     end
   end
 end

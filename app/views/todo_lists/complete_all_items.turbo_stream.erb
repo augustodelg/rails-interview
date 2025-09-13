@@ -1,0 +1,3 @@
+<%= turbo_stream.replace "todo_list_#{@todo_list.id}_items" do %>
+  <%= render 'todo_list_items/list', todo_list: @todo_list %>
+<% end %>

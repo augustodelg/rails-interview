@@ -1,9 +1,0 @@
-<div>
-  <h3 class="text-lg font-medium text-gray-900">#<%= todo_list.id %> | <%= todo_list.name %></h3>
-  <div class="mt-1 flex items-center space-x-4 text-sm text-gray-500">
-    <span><%= pluralize(todo_list.todo_list_items.count, 'item') %></span>
-    <span class="text-green-600">
-      (<%= todo_list.todo_list_items.where(is_done: true).count %> completed)
-    </span>
-  </div>
-</div>

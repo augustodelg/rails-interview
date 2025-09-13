@@ -1,0 +1,31 @@
+<%= turbo_stream_from @todo_list %>
+  <div class="sm:flex sm:items-center sm:justify-between">
+    <div class="sm:flex-auto">
+      <div class="flex items-center pb-4">
+        <%= link_to "← Back", todo_lists_path, 
+                   class: "text-blue-600 hover:text-blue-500 text-sm font-medium" %>
+      </div>
+      <div class="mt-4 sm:mt-0 flex flex-col space-y-3  md:flex-row md:justify-between md:items-center">
+        <h2 class="mt-2 text-3xl font-bold leading-7 text-gray-900"><%= @todo_list.name %></h2>
+        <div class="flex space-x-3">
+          <%= button_to "Complete All Items", 
+                      complete_all_items_todo_list_path(@todo_list),
+                      method: :patch,
+                      class: "bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-4 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2" %>
+        
+          <%= link_to "Edit List", edit_todo_list_path(@todo_list),
+                  class: "bg-white hover:bg-gray-50 border border-gray-300 text-gray-700 font-medium py-2 px-4 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2" %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="mt-8">
+    <%= turbo_frame_tag "new_todo_item_form" do %>
+      <%= render 'todo_list_items/form', todo_list: @todo_list, todo_list_item: @todo_list_item %>
+    <% end %>
+  </div>
+
+  <div class="mt-8">
+    <%= render 'todo_list_items/list', todo_list: @todo_list %>
+  </div>

@@ -12,8 +12,8 @@ module Api
       end
     end
 
-    # POST /api/todolists/:id/complete_all
-    def complete_all
+    # POST /api/todolists/:id/complete_all_items
+    def complete_all_items
       service = TodoLists::CompleteAllService.call(todo_list_id: params[:id])
       
       if service.success?
